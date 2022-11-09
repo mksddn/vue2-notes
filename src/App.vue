@@ -1,28 +1,154 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div class="wrapper">
+    <div class="wrapper-content">
+      <section>
+        <div class="container">
+          <MessageVue v-if="message" :message="message" />
+
+          <NewNoteVue
+            :note="note"
+            @addNote="addNote"
+            @updateTitle="updateTitle"
+            @updateDescr="updateDescr"
+          />
+
+          <div class="list-header">
+            <h1 class="list-title">{{ title }}</h1>
+            <div class="icons">
+              <svg
+                :class="{ active: grid }"
+                @click="grid = true"
+                title="Вид плиткой"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="3" y="3" width="7" height="7"></rect>
+                <rect x="14" y="3" width="7" height="7"></rect>
+                <rect x="14" y="14" width="7" height="7"></rect>
+                <rect x="3" y="14" width="7" height="7"></rect>
+              </svg>
+              <svg
+                :class="{ active: !grid }"
+                @click="grid = false"
+                title="Вид списком"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="8" y1="6" x2="21" y2="6"></line>
+                <line x1="8" y1="12" x2="21" y2="12"></line>
+                <line x1="8" y1="18" x2="21" y2="18"></line>
+                <line x1="3" y1="6" x2="3" y2="6"></line>
+                <line x1="3" y1="12" x2="3" y2="12"></line>
+                <line x1="3" y1="18" x2="3" y2="18"></line>
+              </svg>
+            </div>
+          </div>
+
+          <NotesVue :notes="notes" :grid="grid" @removeNote="removeNote" />
+        </div>
+      </section>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
-
+import MessageVue from './components/Message.vue';
+import NewNoteVue from './components/NewNote.vue';
+import NotesVue from './components/Notes.vue';
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    HelloWorld,
+    MessageVue,
+    NewNoteVue,
+    NotesVue,
+  },
+  data() {
+    return {
+      title: 'Заметки',
+      grid: true,
+      note: {
+        title: '',
+        descr: '',
+        id: null,
+      },
+      message: null,
+      notes: [
+        {
+          title: 'Первая заметка',
+          descr: 'Попробуй добавить еще 😉',
+          id: Date.now(),
+          date: new Date(Date.now()).toLocaleString(),
+        },
+      ],
+    };
+  },
+  methods: {
+    updateTitle(value) {
+      this.note.title = value;
+    },
+    updateDescr(value) {
+      this.note.descr = value;
+    },
+    addNote() {
+      let { title, descr } = this.note;
+      if (title === '') {
+        this.message = 'Заголовок не может быть пустым';
+        return false;
+      }
+      this.notes.push({
+        title,
+        descr,
+        id: Date.now(),
+        date: new Date(Date.now()).toLocaleString(),
+      });
+      this.note.title = '';
+      this.note.descr = '';
+      this.message = null;
+    },
+    removeNote(id) {
+      this.notes.splice(
+        this.notes.findIndex((note) => note.id == id),
+        1,
+      );
+    },
   },
 };
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list-title {
+  font-size: 32px;
+}
+
+.icons svg {
+  margin-right: 10px;
+  color: #999;
+  cursor: pointer;
+  &:last-child {
+    margin-right: 0;
+  }
+  &.active {
+    color: #404caf;
+  }
 }
 </style>
