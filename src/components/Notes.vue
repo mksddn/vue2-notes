@@ -11,7 +11,7 @@
       </div>
     </div>
   </div>
-  <div class="notes" v-else>
+  <div class="notes no-notes" v-else>
     <p>Заметок пока нет</p>
   </div>
 </template>
@@ -91,5 +91,8 @@ export default {
 }
 .btnDel {
   cursor: pointer;
+}
+.no-notes {
+  justify-content: center;
 }
 </style>

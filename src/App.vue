@@ -84,6 +84,7 @@ export default {
   data() {
     return {
       title: 'Заметки',
+      windowWidth: window.innerWidth,
       grid: true,
       searchQuery: '',
       note: {
@@ -150,6 +151,12 @@ export default {
     search(val) {
       this.searchQuery = val;
     },
+  },
+  mounted() {
+    if (window.innerWidth > 600) {
+      this.grid = true;
+    } else this.grid = false;
+    return this.grid;
   },
 };
 </script>
