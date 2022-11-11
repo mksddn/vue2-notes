@@ -39,6 +39,6 @@ export default {
 <style lang="scss" scoped>
 .new-note {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 60px;
 }
 </style>

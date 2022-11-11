@@ -3,8 +3,6 @@
     <div class="wrapper-content">
       <section>
         <div class="container">
-          <MessageVue v-if="message" :message="message" />
-
           <NewNoteVue
             :note="note"
             @addNote="addNote"
@@ -12,8 +10,13 @@
             @updateDescr="updateDescr"
           />
 
+          <MessageVue v-if="message" :message="message" />
+
           <div class="list-header">
             <h1 class="list-title">{{ title }}</h1>
+
+            <SearchVue @search="search" />
+
             <div class="icons">
               <svg
                 :class="{ active: grid }"
@@ -58,7 +61,7 @@
             </div>
           </div>
 
-          <NotesVue :notes="notes" :grid="grid" @removeNote="removeNote" />
+          <NotesVue :notes="notesFilter" :grid="grid" @removeNote="removeNote" />
         </div>
       </section>
     </div>
@@ -69,17 +72,20 @@
 import MessageVue from './components/Message.vue';
 import NewNoteVue from './components/NewNote.vue';
 import NotesVue from './components/Notes.vue';
+import SearchVue from './components/Search.vue';
 export default {
   name: 'App',
   components: {
     MessageVue,
     NewNoteVue,
     NotesVue,
+    SearchVue,
   },
   data() {
     return {
       title: 'Заметки',
       grid: true,
+      searchQuery: '',
       note: {
         title: '',
         descr: '',
@@ -95,6 +101,22 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    notesFilter() {
+      let query = this.searchQuery,
+        array = this.notes;
+      if (!query) return array;
+      array = array.filter((note) => {
+        const computedObj = {
+          ...note,
+        };
+        return Object.keys(computedObj).some((key) =>
+          ('' + computedObj[key]).trim().toLowerCase().includes(query.trim().toLowerCase()),
+        );
+      });
+      return array;
+    },
   },
   methods: {
     updateTitle(value) {
@@ -125,6 +147,9 @@ export default {
         1,
       );
     },
+    search(val) {
+      this.searchQuery = val;
+    },
   },
 };
 </script>
@@ -134,10 +159,18 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  @media screen and (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 }
 
 .list-title {
   font-size: 32px;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
 }
 
 .icons svg {

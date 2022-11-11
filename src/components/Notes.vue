@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="notes" v-else>
-    <p>Пусто</p>
+    <p>Заметок пока нет</p>
   </div>
 </template>
 
