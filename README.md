@@ -1,5 +1,7 @@
 # Приложение для заметок на VUE 2
 
+![preview](https://user-images.githubusercontent.com/22976310/201465334-23e55a03-9eb2-477d-8313-c319e3aaac15.gif)
+
 - `ESLint` + `Prettier`
 - Препроцессор `SCSS`
 - Добавление и удаление заметок
