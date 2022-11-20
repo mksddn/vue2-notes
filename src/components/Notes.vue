@@ -1,9 +1,16 @@
 <template>
   <div class="notes" v-if="notes.length > 0">
-    <div class="note" :class="{ w100: !grid }" v-for="note in notes" :key="note.id">
+    <div
+      class="note"
+      :class="{ w100: !grid }"
+      v-for="note in notes"
+      :key="note.id"
+    >
       <div class="note-header">
         <h3>{{ note.title }}</h3>
-        <span class="btnDel" title="Удалить" @click="removeNote(note.id)">x</span>
+        <span class="btnDel" title="Удалить" @click="removeNote(note.id)"
+          >x</span
+        >
       </div>
       <div class="note-body">
         <p>{{ note.descr }}</p>

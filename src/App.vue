@@ -61,7 +61,11 @@
             </div>
           </div>
 
-          <NotesVue :notes="notesFilter" :grid="grid" @removeNote="removeNote" />
+          <NotesVue
+            :notes="notesFilter"
+            :grid="grid"
+            @removeNote="removeNote"
+          />
         </div>
       </section>
     </div>
@@ -113,7 +117,10 @@ export default {
           ...note,
         };
         return Object.keys(computedObj).some((key) =>
-          ('' + computedObj[key]).trim().toLowerCase().includes(query.trim().toLowerCase()),
+          ('' + computedObj[key])
+            .trim()
+            .toLowerCase()
+            .includes(query.trim().toLowerCase()),
         );
       });
       return array;
