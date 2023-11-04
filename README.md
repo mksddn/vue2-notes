@@ -8,8 +8,8 @@
 - Поиск по всем полям
 - Изменение вида сетки в зависимости от ширины экрана
 
-### [Открыть в GitHub Pages](https://mrmadu.github.io/vue2-notes/)
-### [Запустить в сэндбоксе](https://codesandbox.io/s/github/mrmadu/vue2-notes)
+### [Открыть в GitHub Pages](https://mksddn.github.io/vue2-notes/)
+### [Запустить в сэндбоксе](https://codesandbox.io/s/github/mksddn/vue2-notes)
 
 ------------------
 
